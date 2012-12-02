@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.bht-berlin.esa.agpt</groupId>
+	<artifactId>services</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>WebServices and the Client Application for the Software Project in ESA</name>
+	<packaging>jar</packaging>
+
+	<properties>
+		<glassfish.home>C:\JEE6\netbeans-glassfish-3.1.2.2\glassfish</glassfish.home>
+		<jersey-version>1.12</jersey-version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<!-- The file lib/gf-client.jar in installed Glassfish 3.1.2 -->
+			<groupId>org.glassfish.main.appclient.client</groupId>
+			<artifactId>gf-client</artifactId>
+			<version>3.1.2</version>
+			<scope>system</scope>
+			<systemPath>${glassfish.home}/lib/gf-client.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>${jersey-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>${jersey-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>${jersey-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.net.httpserver</groupId>
+			<artifactId>http</artifactId>
+			<version>20070405</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0-3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>openejb-core</artifactId>
+			<version>4.0.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<!-- <repository> <id>apache-m2-snapshot</id> <name>Apache Snapshot Repository</name> 
+			<url>http://repository.apache.org/snapshots</url> </repository> -->
+	</repositories>
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<finalName>${artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<!-- <plugin> <groupId>com.googlecode.t7mp</groupId> <artifactId>maven-tomee-plugin</artifactId> 
+				<version>0.9.10.M3</version> </plugin> -->
+		</plugins>
+	</build>
+
+</project>
