@@ -1,5 +1,6 @@
 package webfrontend.restful_newsticker;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 
@@ -8,10 +9,12 @@ public class Article {
 	private Date published;
 	private String url;
 	private String title;
-	private String imageUrl=null;
+	private String imageUrl = null;
 	
-	public String getPublished() {
-		return published.toGMTString();
+	public Article(String url, String title, Date publishedDate) {
+		this.title = title;
+		this.url = url;
+		this.published = publishedDate;
 	}
 	
 	public String getTitle() {
@@ -30,16 +33,12 @@ public class Article {
 		return imageUrl;
 	}
 	
-	public Article(String url,String title,Date published) 
-	{
-		this.title=title;
-		this.url=url;
-		this.published=published;
+	public String getPublished() {
+		return DateFormat.getInstance().format(published);
 	}
 	
 	@Override
 	public String toString() {
-		return getPublished()+"\n"+title+"\n"+url;
+		return getPublished() + "\n" + title + "\n" + url;
 	}
-
 }
