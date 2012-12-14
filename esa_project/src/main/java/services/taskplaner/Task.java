@@ -21,22 +21,33 @@ public class Task implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	
+
 	private int dd;
+
 	private int hh;
+
 	private int m;
+
 	private int mm;
+
+	private String tasktext;
+
+	private String username;
+
 	private int yyyy;
 	
-	private String tasktext;
-	private String username;
-	
+	@Override
+	public String toString() 
+	{
+		return "Task for "+username+", due "+yyyy+"-"+mm+"-"+dd+" "+(hh<10?"0":"")+hh+":"+(m<10?"0":"")+m+"\n"+tasktext;
+	}
+
 	public Task() {
 	}
 	
 	public Task(String username, String tasktext, int yyyy, int mm, int dd,
 			int hh, int m) {
-//		super(); // wird automatisch eingefuegt; zeile kann geloescht werden
+		super();
 		this.username = username;
 		this.tasktext = tasktext;
 		this.yyyy = yyyy;
@@ -46,8 +57,10 @@ public class Task implements Serializable {
 		this.m = m;
 	}
 
+
+
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -55,7 +68,7 @@ public class Task implements Serializable {
 	}
 
 	public int getDd() {
-		return dd;
+		return this.dd;
 	}
 
 	public void setDd(int dd) {
@@ -63,7 +76,7 @@ public class Task implements Serializable {
 	}
 
 	public int getHh() {
-		return hh;
+		return this.hh;
 	}
 
 	public void setHh(int hh) {
@@ -71,7 +84,7 @@ public class Task implements Serializable {
 	}
 
 	public int getM() {
-		return m;
+		return this.m;
 	}
 
 	public void setM(int m) {
@@ -79,7 +92,7 @@ public class Task implements Serializable {
 	}
 
 	public int getMm() {
-		return mm;
+		return this.mm;
 	}
 
 	public void setMm(int mm) {
@@ -87,7 +100,7 @@ public class Task implements Serializable {
 	}
 
 	public String getTasktext() {
-		return tasktext;
+		return this.tasktext;
 	}
 
 	public void setTasktext(String tasktext) {
@@ -95,7 +108,7 @@ public class Task implements Serializable {
 	}
 
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 	public void setUsername(String username) {
@@ -103,17 +116,11 @@ public class Task implements Serializable {
 	}
 
 	public int getYyyy() {
-		return yyyy;
+		return this.yyyy;
 	}
 
 	public void setYyyy(int yyyy) {
 		this.yyyy = yyyy;
 	}
-	
-	@Override
-	public String toString() {
-		return "Task for " +username + ", due " + yyyy +
-				"-" + mm + "-" + dd + " " + (hh < 10 ? "0" : "") + 
-				hh + ":" + (m < 10 ? "0" : "") + m + "\n" + tasktext;
-	}
+
 }

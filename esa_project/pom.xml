@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<properties>
-		<glassfish.home>C:\JEE6\netbeans-glassfish-3.1.2.2\glassfish</glassfish.home>
+		<glassfish.home>P:/glassfishv3/glassfish/glassfishv3/glassfish</glassfish.home>
 		<jersey-version>1.12</jersey-version>
 	</properties>
 
@@ -78,6 +78,24 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<verbose>true</verbose>
+					<packageName>generated</packageName> <!-- The name of your generated source package -->
+					<wsdlUrls>
+						<wsdlUrl>http://www.webservicex.com/globalweather.asmx?wsdl</wsdlUrl>
+					</wsdlUrls>
 				</configuration>
 			</plugin>
 			<!-- <plugin> <groupId>com.googlecode.t7mp</groupId> <artifactId>maven-tomee-plugin</artifactId> 

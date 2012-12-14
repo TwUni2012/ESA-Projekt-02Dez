@@ -1,124 +1,96 @@
 package client;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.util.List;
-import java.util.Vector;
-
-import javax.naming.InitialContext;
-
-import services.taskplaner.Task;
-import services.taskplaner.TaskPlaner;
-import webfrontend.restful_newsticker.Article;
-import webfrontend.restful_newsticker.ArticleFactory;
-
+import webfrontend.soap_globalweather.GlobalWeatherService;
 
 public class Client {
 
-	public static void main(final String[] args) {
-				runTaskPlaner();
-//		runRESTfulNewsTicker();
-	}
+	private static GlobalWeatherService service;
 
-	private static void runRESTfulNewsTicker() {
-		final String serviceURL = "http://content.guardianapis.com/world";
-		final String applicationURL = "?format=xml&order-by=newest&date-id=date%2Ftoday";
-		try {
-			//connect to the api
-			final HttpURLConnection connection = (HttpURLConnection) (new URL(serviceURL+applicationURL)).openConnection();
-			connection.setRequestMethod("GET");
-			connection.connect();
+	private static String value;
+	private static String[] parts;
 
-			// read the response from the restful service
-			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String response=reader.readLine();
+	private static int temperature,wind;
+	private static double windspeed;
+	private static String condition;
+	private static int year,month,day,hour,minute;
 
-			//generate list of articles from the xml-response
-			Vector<Article> articles = ArticleFactory.analyzeResponse(response);
-
-			System.out.println("Result of request " + serviceURL + applicationURL + "\n");
-			
-			for(Article article : articles)
-			{
-				System.out.println(article + "\n");
-			}
-
-		} catch (UnknownHostException uHE) {
-			System.err.println("Couldn't establish connection to " + serviceURL);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private static void runTaskPlaner() {
-		try {
-			final InitialContext context = new InitialContext();
-			final TaskPlaner taskplaner = (TaskPlaner) context.lookup("java:global/services/TaskPlaner");
-
-			List<Task> tasks = taskplaner.getAllTasks();
-			if(tasks!=null) {
-				System.out.println("\nAll Tasks (" + tasks.size() + "):");
-				for(Task t:tasks) {
-					System.out.println(t);
-				}
-			}
-
-			String user = "user2";
-			if(taskplaner.login(user)) {
-				System.out.println("\nLogged in as '" + user + "'");
-				tasks = taskplaner.getTasksFromUser();
-				if(tasks != null) {
-					System.out.println("\nAll Tasks (" + tasks.size() + "):");
-					for(Task t : tasks) {
-						System.out.println(t);
-					}
-				}
-
-				tasks = taskplaner.getTasksForToday();
-				if(tasks != null) {
-					System.out.println("\nTasks for today (" + tasks.size() + "):");
-					for(Task t : tasks) {
-						System.out.println(t);
-					}
-				}
-			}
-
-			if(taskplaner.logout())
-				System.out.println("\n'" + user + "' logged out.");
-
-			user = "user1";
-			if(taskplaner.login(user)) {
-				System.out.println("\nLogged in as '" + user + "'");
-				tasks=taskplaner.getTasksFromUser();
-				if(tasks != null) {
-					System.out.println("All Tasks (" + tasks.size() + "):");
-					for(Task t : tasks) {
-						System.out.println(t);
-					}
-				}
-			}
-
-			user = "user3";
-			
-			if(taskplaner.login(user)) {
-				System.out.println("\nLogged in as '" + user + "'");
-				tasks = taskplaner.getTasksFromUser();
-				if(tasks != null) {
-					System.out.println("All Tasks (" + tasks.size() + "):");
-					for(Task t : tasks) {
-						System.out.println(t);
-					}
-				}
-			} else {
-				System.err.println("\n'" + user + "' couldn't log in.");
-			}
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(final String[] args) 
+//	{
+//		String city="Berlin-Schoenefeld",country="Germany";
+//		
+//		service=new GlobalWeatherService();
+//		
+//		String xml;
+//		try {
+//			xml=service.updateWeather(country,city);
+//			
+//			/*
+//			 * date and time
+//			 */
+//			value=getValueFromXMLTag(xml,"Time");
+//			parts=value.split(" ");
+//			
+//			String[] dateParts=parts[parts.length-3].split("\\.");
+//			year=Integer.parseInt(dateParts[0]);
+//			month=Integer.parseInt(dateParts[1]);
+//			day=Integer.parseInt(dateParts[2]);
+//			System.out.println("Datum:\t\t"+day+". "+month+". "+year);
+//			
+//			hour=(Integer.parseInt(parts[parts.length-2])/100)+1;
+//			minute=Integer.parseInt(parts[parts.length-2])%100;
+//			System.out.println("Uhrzeit:\t"+hour+":"+minute);
+//			
+//			/*
+//			 * temperature
+//			 */
+//			value=getValueFromXMLTag(xml, "Temperature");
+//			temperature=Integer.parseInt(value.substring(value.indexOf("(")+1, value.indexOf(" C)")));
+//			System.out.println("Temperatur:\t"+temperature+" °C");
+//			
+//			/*
+//			 * wind direction and speed
+//			 */
+//			value=getValueFromXMLTag(xml, "Wind");
+//			wind=Integer.parseInt(value.substring(value.indexOf("(")+1, value.indexOf(" degrees)")));
+//			System.out.println("Windrichtung:\t"+wind+" °");
+//			
+//			windspeed=Double.parseDouble(value.substring(value.indexOf("at ")+3, value.indexOf(" MPH")))/0.62;
+//			windspeed=round(windspeed,2);
+//			System.out.println("Windgeschwindigkeit:\t"+windspeed+" km/h");
+//			
+//			/*
+//			 * sky conditions
+//			 */
+//			value=getValueFromXMLTag(xml, "SkyConditions");
+//			condition=value.trim();
+//			System.out.println("Bewölkung:\t"+condition);
+//			
+//		} catch (Exception e) {
+//		}
+//	}
+//
+//	private static double round(double value, int digits) 
+//	{
+//		return (double)((int)value+(Math.round(Math.pow(10,digits)*(value-(int)value)))/(Math.pow(10,digits)));
+//	}
+//
+//	private static String getValueFromXMLTag(String line,String tag) 
+//	{
+//		String startTag="<"+tag+">",endTag="</"+tag+">";
+//		String value=null;
+//
+//		if(!line.contains(startTag) || !line.contains(endTag))
+//			return null;
+//
+//		int start=line.indexOf(startTag)+startTag.length();
+//		int end=line.indexOf(endTag);
+//
+//		if(start>=end)
+//			return null;
+//
+//		value=line.substring(start, end);
+//
+//		return value;
+//	}
+//
 }

@@ -1,21 +1,17 @@
 package webfrontend.restful_newsticker;
 
-import java.text.DateFormat;
-import java.util.Date;
 
 
 public class Article {
 	
-	private Date published;
 	private String url;
 	private String title;
-	private String imageUrl = null;
-	
-	public Article(String url, String title, Date publishedDate) {
-		this.title = title;
-		this.url = url;
-		this.published = publishedDate;
-	}
+	private String imageUrl=null;
+	private int year;
+	private int month;
+	private int day;
+	private int hour;
+	private int minute;
 	
 	public String getTitle() {
 		return title;
@@ -33,12 +29,19 @@ public class Article {
 		return imageUrl;
 	}
 	
-	public String getPublished() {
-		return DateFormat.getInstance().format(published);
+	public Article(String url,String title,int year,int month,int day,int hour,int minute) 
+	{
+		this.title=title;
+		this.url=url;
+		this.year=year;
+		this.month=month;
+		this.day=day;
+		this.hour=hour;
+		this.minute=minute;
 	}
 	
-	@Override
-	public String toString() {
-		return getPublished() + "\n" + title + "\n" + url;
+	public String getPublished() {
+		return year+"-"+month+"-"+day+" "+hour+":"+minute+" GMT";
 	}
+
 }
