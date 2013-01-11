@@ -81,4 +81,34 @@ public class ArticleFactory {
 		return articles;
 	}
 
+	public static String cleanSpecialTokens(String line) {
+		line=line.replaceAll("\\Ã–", "Ö");
+		line=line.replaceAll("\\Ã\\¤", "ä");
+		line=line.replaceAll("\\Ã\\¶", "ö");
+		line=line.replaceAll("\\Ã\\¼", "ü");
+		line=line.replaceAll("\\Ã\\Ÿ", "ß");
+		line=line.replaceAll("\\&\\#40\\;", "\\(");
+		line=line.replaceAll("\\&\\#41\\;", "\\)");
+		
+		return line;
+	}
+
+	public static String cleanFromTags(String line) {
+		String result="";
+		boolean inTag=false;
+		for(char c:line.toCharArray())
+		{
+			if(c=='<')
+				inTag=true;
+			else if(c=='>')
+				inTag=false;
+			
+			if(!inTag && c!='>')
+			{
+				result+=c;
+			}
+		}
+		return result;
+	}
+
 }

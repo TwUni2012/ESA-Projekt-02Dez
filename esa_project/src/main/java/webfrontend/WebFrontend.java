@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import webfrontend.mdb_rss.view.MdbRssGui;
 import webfrontend.restful_newsticker.view.RestFulNewsGui;
 import webfrontend.soap_globalweather.view.GlobalWeatherGUI;
 
@@ -15,14 +16,18 @@ public class WebFrontend extends JFrame {
 	public static String sectionURL="world";
 	public final static String format="?format=xml";
 	public static String apiURL="&order-by=newest&date-id=date%2Flast24hours";
+	public final static String MDB_QUEUE_NAME="RSSQueue";
+	public final static String loading="<html><body bgcolor=#ffffff><center><font face=verdana>Loading...</font></center></body></html>";
 	
-	public final static int TICKER_TIME=5*1000; //10 sec
+	public final static int TICKER_TIME=5*1000; //5 sec
 	public final static int UPDATE_RESTFUL_NEWSTICKER=5*60*1000; //5 min
+	public final static int UPDATE_RSSTICKER=5*60*1000; //5 min
 	
 	private static WebFrontend gui;
 
 	public static RestFulNewsGui restfulGui;
 	public GlobalWeatherGUI globalWeatherGUI;
+	public MdbRssGui mdbRssGui;
 
 	public WebFrontend(int width, int height) 
 	{
@@ -38,7 +43,7 @@ public class WebFrontend extends JFrame {
 		
 		add(globalWeatherGUI=new GlobalWeatherGUI());
 		
-		add(new JLabel(missingWidget));
+		add(mdbRssGui=new MdbRssGui());
 		
 	}
 

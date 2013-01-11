@@ -18,7 +18,7 @@ public class ArticleDialog extends JDialog {
 		setSize(600, 800);
 		setLayout(new BorderLayout(5, 5));
 		
-		htmlpane=new JEditorPane("text/html", WebFrontend.restfulGui.loading);
+		htmlpane=new JEditorPane("text/html", WebFrontend.loading);
 		htmlpane.setEditable(false);
 		
 		scrollpane=new JScrollPane(htmlpane);
@@ -30,6 +30,7 @@ public class ArticleDialog extends JDialog {
 	public void setHtml(String html,String title)
 	{
 		setTitle(title);
+//		html=ArticleFactory.cleanSpecialTokens(html);
 		html=html.replaceAll("<p>", "<br><br><font face=verdana>&nbsp;&nbsp;&nbsp;");
 		htmlpane.setText("<html><body><center><br><font face=arial size=5><b>" +
 				title+

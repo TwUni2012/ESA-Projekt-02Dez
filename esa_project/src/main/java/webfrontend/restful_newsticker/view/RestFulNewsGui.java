@@ -30,7 +30,6 @@ public class RestFulNewsGui extends Container {
 	private Vector<Article> articles=null;
 	private TickerThread tickerThread;
 
-	public final static String loading="<html><body bgcolor=#ffffff><center><font face=verdana>Loading...</font></center></body></html>";
 	public final static String buttonText="Load";
 
 	private int currentArticle;
@@ -49,7 +48,7 @@ public class RestFulNewsGui extends Container {
 
 		articleDialog=new ArticleDialog();
 
-		htmlLabel=new JEditorPane("text/html",loading);
+		htmlLabel=new JEditorPane("text/html",WebFrontend.loading);
 		htmlLabel.setEditable(false);
 		htmlLabel.addHyperlinkListener(new HyperlinkListener() {
 
@@ -65,7 +64,7 @@ public class RestFulNewsGui extends Container {
 					if(!articleDialog.isVisible())
 						articleDialog.setVisible(true);
 
-					articleDialog.setHtml(loading,"Loading...");
+					articleDialog.setHtml(WebFrontend.loading,"Loading...");
 
 					HttpURLConnection connection;
 					try 
